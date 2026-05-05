@@ -6,24 +6,32 @@ namespace NotificationSystem.Models
         SMSNotification = 2
     }
 
-    internal class Notification
+    internal class Notification : IComparable<Notification>
     {
+        public string MessageId { get; set; } = string.Empty;
         public string message { get; set; } = string.Empty;
         public DateTime sentDate { get; set; }
         public NotifType notifType { get; set; }
 
         public Notification() { }
 
-        public Notification(string message, DateTime sentDate)
+        public Notification(string messageId, string message, DateTime sentDate)
         {
+            this.MessageId = messageId;
             this.message = message;
             this.sentDate = sentDate;
         }
 
         public override string ToString()
         {
-            return $"message: {message}" +
-                   $"sent date: {sentDate}";
+            return $"Message Id: {MessageId}" +
+            $"message: {message}" +
+            $"sent date: {sentDate}";
+        }
+
+        public int CompareTo(Notification? other)
+        {
+            return this.MessageId.CompareTo(other.MessageId);
         }
     }
 }
